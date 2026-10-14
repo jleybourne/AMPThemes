@@ -1755,8 +1755,10 @@ table:not(:has(tbody tr)) > thead, table:not(:has(tbody tr)) > thead th { border
     #sideMenuContainer.appear #sideMenu { width: 100% !important; height: auto !important; max-height: none !important; overflow: visible !important; padding: 10px !important; box-sizing: border-box; }
     #sideMenuContainer.appear .heroImage,
     #sideMenuContainer.appear #bgtext,
-    #sideMenuContainer.appear > #sideMenu > .menuTitle,
+    #sideMenuContainer.appear > #sideMenu.childOpen > .menuTitle,
     #sideMenuContainer.appear .subMenuWell:not(.appear) { display: none !important; }
+    /* Brick logo + "Main Menu" heading above the tiles */
+    #sideMenuContainer.appear > #sideMenu:not(.childOpen) > .menuTitle { display: flex !important; align-items: center; gap: 10px; margin: 0 0 10px !important; padding: 0 !important; }
 
     #sideMenuContainer.appear #sideMenuPresenter,
     #sideMenuContainer.appear .subMenuWell.appear { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px !important; width: 100% !important; }
