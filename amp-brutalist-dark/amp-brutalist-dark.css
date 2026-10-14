@@ -1743,16 +1743,6 @@ table:not(:has(tbody tr)) > thead, table:not(:has(tbody tr)) > thead th { border
     *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
-/* Tablet widths (661-1000px): while a sub-menu (e.g. an instance's
-   Configuration menu) is open, keep the icon rail 72px wide and give the
-   flyout a solid panel, so the rail icons and game art don't show through
-   the menu and long labels like "Security and Privacy" aren't clipped. */
-@media screen and (max-width: 1000px) and (min-width: 661px) {
-    #sideMenuContainer.childOpen { width: 300px !important; }
-    #sideMenu.childOpen { width: 72px !important; }
-    #sideMenuContainer .subMenuWell.appear { width: 225px !important; background: var(--b-chrome) !important; }
-}
-
 /* Phones (660px and below): the open menu spans the top of the page as a
    grid of tiles and pushes the page content down below it, instead of a
    drawer that slides in from the side over the page. Sub-menus (e.g. an
@@ -1799,4 +1789,77 @@ table:not(:has(tbody tr)) > thead, table:not(:has(tbody tr)) > thead th { border
     #sideMenu.childOpen #sideMenuPresenter > a,
     #sideMenu.childOpen #sideMenuPresenter > .multiMenuContainer > a,
     #sideMenu.childOpen #sideMenuPresenter > .multiMenuContainer:not(:has(> .subMenuWell.appear)) { display: none !important; }
+}
+
+/* Tablets (661-1000px): opening a sub-menu from the icon rail (e.g. an
+   instance's Configuration menu) shows it across the top of the page as a
+   grid of tiles that pushes the page content down, the same as on phones.
+   Back returns to the icon rail. */
+@media screen and (max-width: 1000px) and (min-width: 661px) {
+    html:has(> body > #sideMenuContainer.childOpen) { height: auto !important; overflow-y: auto !important; }
+    body:has(> #sideMenuContainer.childOpen) { display: flex !important; flex-direction: column !important; height: auto !important; min-height: 100dvh; padding-top: 51px !important; box-sizing: border-box; overflow-y: auto !important; }
+    #sideMenuContainer.childOpen { position: relative !important; order: -1; inset: auto !important; width: 100% !important; height: auto !important; max-height: none !important; flex: none !important; margin: 0 !important; transform: none !important; border-right: none !important; border-bottom: 3px solid var(--b-line) !important; box-shadow: none !important; }
+    body:has(> #sideMenuContainer.childOpen) > #mainBody { position: relative !important; inset: auto !important; width: 100% !important; height: calc(100dvh - 51px) !important; flex: none !important; transform: none !important; }
+    #sideMenuContainer.childOpen #sideMenu { width: 100% !important; height: auto !important; max-height: none !important; overflow: visible !important; padding: 10px !important; box-sizing: border-box; }
+    #sideMenuContainer.childOpen .heroImage,
+    #sideMenuContainer.childOpen #bgtext,
+    #sideMenuContainer.childOpen > #sideMenu > .menuTitle,
+    #sideMenuContainer.childOpen .subMenuWell:not(.appear) { display: none !important; }
+
+    #sideMenuContainer.childOpen #sideMenuPresenter,
+    #sideMenuContainer.childOpen .subMenuWell.appear { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px !important; width: 100% !important; }
+    #sideMenuContainer.childOpen #sideMenuPresenter > .multiMenuContainer,
+    #sideMenuContainer.childOpen .subMenuWell.appear > div:not(.menuTitle) { display: contents !important; }
+    #sideMenuContainer.childOpen .subMenuWell.appear { position: static !important; grid-column: 1 / -1; height: auto !important; margin: 0 !important; padding: 0 !important; border: none !important; box-shadow: none !important; background: transparent !important; }
+    #sideMenuContainer.childOpen .subMenuWell.appear > .menuTitle { grid-column: 1 / -1; display: block !important; margin: 0 !important; padding: 0 0 2px !important; }
+
+    /* Tiles */
+    #sideMenuContainer.childOpen #sideMenu a {
+        position: relative !important;
+        display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;
+        gap: 3px !important; min-height: 58px !important; height: auto !important; width: auto !important;
+        margin: 0 !important; padding: 6px 4px !important; box-sizing: border-box;
+        text-align: center; line-height: 1.15 !important;
+        border: 3px solid var(--b-line) !important; background: var(--b-surface) !important; box-shadow: 3px 3px 0 var(--b-shadow) !important;
+    }
+    #sideMenuContainer.childOpen #sideMenu a.selected { background: var(--b-yellow) !important; }
+    #sideMenuContainer.childOpen #sideMenu a > div { display: block !important; }
+    #sideMenuContainer.childOpen #sideMenu a span,
+    #sideMenuContainer.childOpen #sideMenu a div { font-size: 12px !important; font-weight: 700 !important; margin: 0 !important; }
+    #sideMenuContainer.childOpen #sideMenu a > .mat-icon:not(.warn) { font-size: 22px !important; }
+    #sideMenuContainer.childOpen #sideMenu a .subtitle,
+    #sideMenuContainer.childOpen #sideMenu a.hasNotice::after,
+    #sideMenuContainer.childOpen .multiMenuContainer > a > .mat-icon:last-child { display: none !important; }
+    #sideMenuContainer.childOpen #sideMenu a > .mat-icon.warn { position: absolute !important; top: -7px !important; right: -7px !important; width: 20px !important; height: 20px !important; display: grid !important; place-items: center; font-size: 14px !important; color: #111111 !important; background: var(--b-orange) !important; border: 2px solid #111111 !important; }
+    #sideMenuContainer.childOpen #sideMenu a > .mat-icon.warn[style*="none"] { display: none !important; }
+
+    /* With a sub-menu open, only its own tiles show */
+    #sideMenu.childOpen #sideMenuPresenter > a,
+    #sideMenu.childOpen #sideMenuPresenter > .multiMenuContainer > a,
+    #sideMenu.childOpen #sideMenuPresenter > .multiMenuContainer:not(:has(> .subMenuWell.appear)) { display: none !important; }
+
+    /* The icon rail is replaced by the tile panel, so the page starts at the left edge */
+    body:has(> #sideMenuContainer.childOpen) .bodyTab:not(.wizardTab) { left: 0 !important; }
+}
+
+/* Instance group toolbar (Refresh / Start All / Stop All / Update All /
+   Create Instance): every button is the same width, so none sticks out
+   and the black toolbar never shows past the last button. Tablets stack
+   each button's icon above its label so all five fit on one row; phones
+   stack the buttons top to bottom at full width, labels shown. */
+.ServerGroupHeader .ServerGroupActions { display: inline-grid !important; grid-auto-flow: column !important; grid-auto-columns: minmax(0, 1fr) !important; max-width: 100% !important; box-sizing: border-box; }
+.ServerGroupHeader .ServerGroupActions > button,
+.ServerGroupHeader .ServerGroupActions > .button { width: auto !important; min-width: 0 !important; margin: 0 !important; justify-content: center !important; text-align: center; white-space: normal !important; }
+@media screen and (max-width: 1000px) and (min-width: 661px) {
+    .ServerGroupHeader .ServerGroupActions > button,
+    .ServerGroupHeader .ServerGroupActions > .button { flex-direction: column !important; align-items: center !important; gap: 2px !important; padding: 6px 4px !important; height: auto !important; }
+    .ServerGroupHeader .ServerGroupActions > button .mat-icon { margin: 0 !important; }
+}
+@media screen and (max-width: 660px) {
+    .ServerGroupHeader .ServerGroupName { flex-direction: column !important; align-items: stretch !important; gap: 10px !important; width: 100% !important; }
+    .ServerGroupHeader .ServerGroupActions { display: grid !important; grid-auto-flow: row !important; grid-auto-columns: auto !important; grid-template-columns: 1fr !important; width: 100% !important; }
+    .ServerGroupHeader .ServerGroupActions > button,
+    .ServerGroupHeader .ServerGroupActions > .button { gap: 10px !important; padding: 8px 12px !important; border-right: none !important; border-bottom: 3px solid #111111 !important; }
+    .ServerGroupHeader .ServerGroupActions > :last-child { border-bottom: none !important; }
+    .ServerGroupHeader .ServerGroupActions .label { display: inline !important; }
 }
