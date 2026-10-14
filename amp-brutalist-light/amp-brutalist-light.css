@@ -1742,3 +1742,13 @@ table:not(:has(tbody tr)) > thead, table:not(:has(tbody tr)) > thead th { border
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* Tablet widths (661-1000px): while a sub-menu (e.g. an instance's
+   Configuration menu) is open, keep the icon rail 72px wide and give the
+   flyout a solid panel, so the rail icons and game art don't show through
+   the menu and long labels like "Security and Privacy" aren't clipped. */
+@media screen and (max-width: 1000px) and (min-width: 661px) {
+    #sideMenuContainer.childOpen { width: 300px !important; }
+    #sideMenu.childOpen { width: 72px !important; }
+    #sideMenuContainer .subMenuWell.appear { width: 225px !important; background: var(--b-chrome) !important; }
+}
