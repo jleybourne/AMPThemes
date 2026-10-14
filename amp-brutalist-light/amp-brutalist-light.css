@@ -1752,3 +1752,51 @@ table:not(:has(tbody tr)) > thead, table:not(:has(tbody tr)) > thead th { border
     #sideMenu.childOpen { width: 72px !important; }
     #sideMenuContainer .subMenuWell.appear { width: 225px !important; background: var(--b-chrome) !important; }
 }
+
+/* Phones (660px and below): the open menu spans the top of the page as a
+   grid of tiles and pushes the page content down below it, instead of a
+   drawer that slides in from the side over the page. Sub-menus (e.g. an
+   instance's Configuration menu) replace the tiles with their own grid. */
+@media screen and (max-width: 660px) {
+    html:has(> body > #sideMenuContainer.appear) { height: auto !important; overflow-y: auto !important; }
+    body:has(> #sideMenuContainer.appear) { display: flex !important; flex-direction: column !important; height: auto !important; min-height: 100dvh; padding-top: 51px !important; box-sizing: border-box; overflow-y: auto !important; }
+    #sideMenuContainer.appear { position: relative !important; order: -1; inset: auto !important; width: 100% !important; height: auto !important; max-height: none !important; flex: none !important; margin: 0 !important; transform: none !important; border-right: none !important; border-bottom: 3px solid var(--b-line) !important; box-shadow: none !important; }
+    #mainBody.appear { position: relative !important; inset: auto !important; width: 100% !important; height: calc(100dvh - 51px) !important; flex: none !important; transform: none !important; }
+    #sideMenuContainer.appear #sideMenu { width: 100% !important; height: auto !important; max-height: none !important; overflow: visible !important; padding: 10px !important; box-sizing: border-box; }
+    #sideMenuContainer.appear .heroImage,
+    #sideMenuContainer.appear #bgtext,
+    #sideMenuContainer.appear > #sideMenu > .menuTitle,
+    #sideMenuContainer.appear .subMenuWell:not(.appear) { display: none !important; }
+
+    #sideMenuContainer.appear #sideMenuPresenter,
+    #sideMenuContainer.appear .subMenuWell.appear { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px !important; width: 100% !important; }
+    #sideMenuContainer.appear #sideMenuPresenter > .multiMenuContainer,
+    #sideMenuContainer.appear .subMenuWell.appear > div:not(.menuTitle) { display: contents !important; }
+    #sideMenuContainer.appear .subMenuWell.appear { position: static !important; grid-column: 1 / -1; height: auto !important; margin: 0 !important; padding: 0 !important; border: none !important; box-shadow: none !important; background: transparent !important; }
+    #sideMenuContainer.appear .subMenuWell.appear > .menuTitle { grid-column: 1 / -1; display: block !important; margin: 0 !important; padding: 0 0 2px !important; }
+
+    /* Tiles */
+    #sideMenuContainer.appear #sideMenu a {
+        position: relative !important;
+        display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;
+        gap: 3px !important; min-height: 58px !important; height: auto !important; width: auto !important;
+        margin: 0 !important; padding: 6px 4px !important; box-sizing: border-box;
+        text-align: center; line-height: 1.15 !important;
+        border: 3px solid var(--b-line) !important; background: var(--b-surface) !important; box-shadow: 3px 3px 0 var(--b-shadow) !important;
+    }
+    #sideMenuContainer.appear #sideMenu a.selected { background: var(--b-yellow) !important; }
+    #sideMenuContainer.appear #sideMenu a > div { display: block !important; }
+    #sideMenuContainer.appear #sideMenu a span,
+    #sideMenuContainer.appear #sideMenu a div { font-size: 12px !important; font-weight: 700 !important; margin: 0 !important; }
+    #sideMenuContainer.appear #sideMenu a > .mat-icon:not(.warn) { font-size: 22px !important; }
+    #sideMenuContainer.appear #sideMenu a .subtitle,
+    #sideMenuContainer.appear #sideMenu a.hasNotice::after,
+    #sideMenuContainer.appear .multiMenuContainer > a > .mat-icon:last-child { display: none !important; }
+    #sideMenuContainer.appear #sideMenu a > .mat-icon.warn { position: absolute !important; top: -7px !important; right: -7px !important; width: 20px !important; height: 20px !important; display: grid !important; place-items: center; font-size: 14px !important; color: #111111 !important; background: var(--b-orange) !important; border: 2px solid #111111 !important; }
+    #sideMenuContainer.appear #sideMenu a > .mat-icon.warn[style*="none"] { display: none !important; }
+
+    /* With a sub-menu open, only its own tiles show */
+    #sideMenu.childOpen #sideMenuPresenter > a,
+    #sideMenu.childOpen #sideMenuPresenter > .multiMenuContainer > a,
+    #sideMenu.childOpen #sideMenuPresenter > .multiMenuContainer:not(:has(> .subMenuWell.appear)) { display: none !important; }
+}
