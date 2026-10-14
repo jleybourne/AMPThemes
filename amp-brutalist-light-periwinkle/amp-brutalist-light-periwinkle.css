@@ -227,7 +227,7 @@ input[type=email]:focus, input[type=search]:focus, select:focus, textarea:focus,
     box-shadow: 4px 4px 0 var(--b-yellow) !important;
 }
 input:focus-visible, textarea:focus-visible, select:focus-visible { outline: none !important; }
-input::placeholder, textarea::placeholder { color: var(--b-ink-3); opacity: 1; font-weight: 500; }
+input::placeholder, textarea::placeholder { color: var(--b-ink-3) !important; opacity: 1 !important; font-weight: 500; }
 select option { background: var(--b-surface); color: var(--b-ink); }
 #barTop #topSearchBox input.searchBox { background: var(--b-field) !important; }
 #topSearchBox { background: transparent !important; border: none !important; box-shadow: none !important; }
