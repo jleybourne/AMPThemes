@@ -1865,3 +1865,65 @@ table:not(:has(tbody tr)) > thead, table:not(:has(tbody tr)) > thead th { border
     .ServerGroupHeader .ServerGroupActions > :last-child { border-bottom: none !important; }
     .ServerGroupHeader .ServerGroupActions .label { display: inline !important; }
 }
+
+/* ==========================================================================
+   Phone & tablet pass (tested page by page at 375px and 768px)
+   ========================================================================== */
+
+/* Phones: the top bar gets a second row so the search box is full width,
+   and the page title shortens with "..." instead of pushing it off screen */
+@media screen and (max-width: 660px) {
+    #barTop { flex-wrap: wrap !important; align-content: flex-start; row-gap: 0 !important; height: 100px !important; box-sizing: border-box; }
+    #barTop #tabInfo { flex: 1 1 0 !important; min-width: 0 !important; height: 48px !important; overflow: hidden; }
+    #barTop #tabTitle, #barTop #tabCaption { white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+    #barTop #tabTitle { font-size: 22px !important; }
+    #barTop #topSearchBox { order: 3; flex: 1 1 100% !important; width: auto !important; max-width: none !important; height: 40px !important; margin: 4px 8px 0 !important; }
+    #barTop #topSearchBox .searchBox { flex: 1 1 auto !important; width: auto !important; min-width: 0 !important; }
+    #mainBody { top: 100px !important; }
+    #mainBody.appear { height: calc(100dvh - 100px) !important; }
+    body:has(> #sideMenuContainer.appear) { padding-top: 100px !important; }
+    #searchResults { top: 100px !important; }
+
+    /* Instances page: the Filter box gets its own full-width row */
+    .instanceViewToolbar { flex-wrap: wrap !important; row-gap: 10px; height: auto !important; }
+    .instanceViewToolbar > input { order: -1; flex: 1 1 100% !important; width: auto !important; min-width: 0 !important; }
+
+    /* Console: the user list is hidden on phones, so the output uses the full width */
+    #consoleArea { margin-right: 0 !important; }
+    #consoleContainer { left: 8px !important; right: 8px !important; }
+    #consoleArea .consoleEntry { font-size: 12px !important; }
+
+    /* Settings pages: AMP pins the tab strip to the bottom of the screen on
+       phones; keep it a bar there instead of stretching it to full height */
+    #tab_settings .tabHeaderContainer { top: auto !important; bottom: 0 !important; height: auto !important; z-index: 30 !important; border-top: 3px solid var(--b-line) !important; background: var(--b-chrome) !important; padding-top: 6px !important; padding-bottom: calc(6px + env(safe-area-inset-bottom)) !important; }
+    #tab_settings .tabHeaderContainer .tabHeader { height: auto !important; flex: 0 0 auto !important; }
+    #tab_settings { padding-bottom: 70px !important; }
+
+    /* Store: one card per row, fitted to the screen */
+    .StoreList { grid-template-columns: minmax(0, 1fr) !important; }
+    .StoreList .StoreCard { width: auto !important; min-width: 0 !important; max-width: none !important; }
+
+    /* Instance status: full-width cards; port rows put the status badge on its own line */
+    #statusActions > div { flex: 1 1 100% !important; width: 100% !important; }
+    #statusActions .listenPort { column-gap: 8px !important; }
+    #statusActions .listenPort > * { min-width: 0; overflow-wrap: anywhere; }
+    #statusActions .listenPort:has(> .AppStatus) { grid-template-columns: 1fr auto auto !important; row-gap: 6px !important; }
+    #statusActions .listenPort > .AppStatus { grid-column: 1 / -1; justify-self: start; }
+
+    #sideMenuContainer.appear.childOpen #userInfo { display: none !important; }
+}
+#statusActions > div { box-sizing: border-box !important; }
+
+/* Sub-menus (e.g. Configuration) are one swipeable row of tiles. AMP keeps a
+   sub-menu open after you pick a page from it, and a theme can't close it,
+   so it only takes one short row above the page. */
+@media screen and (max-width: 660px) {
+    #sideMenuContainer.appear #sideMenu .subMenuWell.appear { display: flex !important; flex-wrap: nowrap !important; gap: 8px !important; overflow-x: auto !important; overflow-y: hidden !important; padding: 0 3px 6px 0 !important; scroll-snap-type: x proximity; scrollbar-width: thin; }
+    #sideMenuContainer.appear #sideMenu .subMenuWell.appear > .menuTitle { display: none !important; }
+    #sideMenuContainer.appear #sideMenu .subMenuWell.appear a { flex: 0 0 96px !important; scroll-snap-align: start; }
+}
+@media screen and (max-width: 1000px) and (min-width: 661px) {
+    #sideMenuContainer.childOpen #sideMenu .subMenuWell.appear { display: flex !important; flex-wrap: nowrap !important; gap: 8px !important; overflow-x: auto !important; overflow-y: hidden !important; padding: 0 3px 6px 0 !important; scroll-snap-type: x proximity; scrollbar-width: thin; }
+    #sideMenuContainer.childOpen #sideMenu .subMenuWell.appear > .menuTitle { display: none !important; }
+    #sideMenuContainer.childOpen #sideMenu .subMenuWell.appear a { flex: 0 0 96px !important; scroll-snap-align: start; }
+}
